@@ -1,9 +1,11 @@
 {
   "name": "emojinext_mc",
-  "version": "1.0.0",
-  "main": "src/emojis.js",
+  "version": "1.0.1",
+  "main": "build.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "package": "node build.js",
+    "build:all": "npm run build && npm run package"
   },
   "keywords": [],
   "author": "DJ Stomp <85457381+DJStompZone@users.noreply.github.com> (https://stomp.zone/)",
@@ -14,5 +16,8 @@
     "@minecraft/server": "^1.7.0",
     "@minecraft/vanilla-data": "^1.21.62",
     "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1"
   }
 }
