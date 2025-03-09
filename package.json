@@ -1,11 +1,14 @@
 {
   "name": "emojinext_mc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "build.js",
   "scripts": {
     "build": "tsc",
     "package": "node build.js",
-    "build:all": "npm run build && npm run package"
+    "bundle": "npm run build && npm run package",
+    "release": "npm run build && node build.js --bump",
+    "release:minor": "npm run build && node build.js --bump --minor",
+    "release:major": "npm run build && node build.js --bump --major"
   },
   "keywords": [],
   "author": "DJ Stomp <85457381+DJStompZone@users.noreply.github.com> (https://stomp.zone/)",
