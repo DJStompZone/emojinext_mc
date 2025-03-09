@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "module": "ES6",
+        "noImplicitAny": false,
+        "outDir": "scripts",
+        "sourceMap": false,
+        "target": "ES6",
+    },
+    "include": [
+        "src/*",
+    ],
+    // "exclude": [
+    //     "node_modules/*"
+    // ],
+    "paths": {
+        "*": [
+            "node_modules/*"
+        ],
+        "@minecraft/*": [
+            "./node_modules/@minecraft/*"
+        ]
+    },
+    "typeAcquisition": {
+        "enable": true
+    }
+}
