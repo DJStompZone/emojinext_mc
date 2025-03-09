@@ -1,7 +1,7 @@
 {
   "name": "emojinext_mc",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/emojis.js",
   "scripts": {
     "build": "tsc"
   },
