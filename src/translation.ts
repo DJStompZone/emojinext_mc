@@ -1,6 +1,9 @@
+import { world } from "@minecraft/server";
 import { ChatData } from "./chat";
 import { newmoji } from "./newmoji";
 import { stickers } from "./stickers";
+
+const mojex = /:[a-z0-9_]+?:/gi;
 
 interface TranslationFunction {
   (msg: string): string;
@@ -37,10 +40,12 @@ export const getTranslation: TranslationFunction = function (
       newMsg.push(chrs[i]);
     }
   }
+  console.log("Debug: (translation::getTranslation)" + `${msg} -> ${newMsg.join("")}`);
   return newMsg.join("");
 };
 
 export function handleTranslation(data: ChatData): void {
+  console.log(`CSZE - (translation::handleTranslation) - Chat message received: ${data.message}`);
   if (["!s", "~s", ".s"].includes(data.message.slice(0, 2).toLowerCase())) {
     if (
       ["s", "sticker"].includes(
@@ -51,22 +56,26 @@ export function handleTranslation(data: ChatData): void {
       if (stkrStr.length === 1) {
         let stkr = getSticker(stkrStr[0]);
         if (stkr !== null) {
-          data.message = stkr;
+          data.cancel = true;
+          world.sendMessage(stkr);
           return;
         }
       }
     }
   }
   if (data.message.includes(":")) {
+    console.log("Debug: (translation::handleTranslation) - Parsing emoji");
     let mojed = parseMoji(data.message);
+    console.log("Debug: (translation::handleTranslation) - Emoji parsed: " + mojed);
     let scram = getTranslation(mojed);
-    data.message = scram;
+    data.cancel = true;
+    world.sendMessage(scram);
   } else {
     let scram = getTranslation(data.message);
     data.message = scram;
   }
 }
-const mojex = /:[a-z0-9_]+?:/gi;
+
 interface ParseMojiFunction {
   (msg: string): string | undefined;
 }
@@ -74,26 +83,35 @@ interface ParseMojiFunction {
 export const parseMoji: ParseMojiFunction = function (
   msg: string
 ): string | undefined {
+  let newMsg: string = msg;
+  console.log("Debug: (translation::parseMoji) - Parsing emoji: " + msg);
   const matches: string[] = msg.match(mojex) ?? [];
   if (!matches) {
+    console.error("Debug: (translation::parseMoji) - No emoji found in message");
     return;
   }
   for (const i of Array(matches?.length ?? 0).keys()) {
     let matched: number | undefined =
       newmoji[matches[i]?.replace(/:/g, "")?.toLowerCase()];
     if (!!matched) {
-      msg = msg.replace(matches[i], String.fromCharCode(matched));
+      newMsg = msg.replace(matches[i], String.fromCharCode(matched));
     }
   }
-  return msg;
+  console.log("Debug: (translation::parseMoji) - Emoji parsed: " + msg);
+  return newMsg;
 };
 
-export const getSticker = function (stkrString) {
+interface GetStickerFunction {
+  (stkrString: string): string | null;
+}
+
+export const getSticker: GetStickerFunction = function (stkrString: string): string | null {
   if (stickers.hasOwnProperty(stkrString)) {
     return `\n\n\n\n\n\n${String.fromCharCode(
       stickers[stkrString]
     )}\n\n\n\n\n\n`;
   } else {
+    console.error(`Sticker ${stkrString} not found`);
     return null;
   }
 };
