@@ -1,0 +1,48 @@
+{
+	"version": "2.0.0",
+	"command": "npm",
+	"isShellCommand": true,
+	"suppressTaskName": true,
+	"tasks": [
+		{
+			"command": "npm",
+			"taskName": "bundle",
+			"label": "bundle",
+			"isBuildCommand": true,
+			"args": ["run", "bundle"]
+			// "tasks": [
+			// 	{
+			// 		"type": "npm",
+			// 		"script": "run build",
+			// 		"group": "build",
+			// 		"problemMatcher": [],
+			// 		"label": "npm: build",
+			// 		"detail": "npm run build"
+			// 	},
+			// 	{
+			// 		"type": "npm",
+			// 		"script": "run bundle",
+			// 		"group": "build",
+			// 		"problemMatcher": [],
+			// 		"label": "npm: bundle",
+			// 		"detail": "npm run bundle"
+			// 	},
+			// 	{
+			// 		"type": "npm",
+			// 		"script": "package",
+			// 		"problemMatcher": [],
+			// 		"label": "npm: package",
+			// 		"detail": "node build.js"
+			// 	},
+			// 	{
+			// 		"type": "npm",
+			// 		"script": "build",
+			// 		"group": "build",
+			// 		"problemMatcher": [],
+			// 		"label": "npm: build",
+			// 		"detail": "tsc"
+			// 	}
+			// ]
+		}
+	]
+}

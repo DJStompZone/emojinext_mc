@@ -1,0 +1,25 @@
+{
+    "version": "0.3.0",
+    "configurations": [
+        {
+            "type": "minecraft-js",
+            "request": "attach",
+            "name": "Minecraft: Attach",
+            "mode": "connect",
+            "localRoot": "${workspaceFolder}/scripts",
+            "host": "localhost",
+            "port": 19144
+        },
+      {
+        "type": "minecraft-js",
+        "request": "attach",
+        "name": "Minecraft: Listen",
+        "mode": "listen",
+        "preLaunchTask": "bundle",
+        "targetModuleUuid": "7c7e693f-99f4-41a9-95e0-1f57b37e1e12",
+        "localRoot": "${workspaceFolder}/",
+        "port": 19144,
+        "host": "localhost"
+     }
+    ]
+  }
