@@ -69,10 +69,10 @@ export function handleTranslation(data: ChatData): void {
     console.log("Debug: (translation::handleTranslation) - Emoji parsed: " + mojed);
     let scram = getTranslation(mojed);
     data.cancel = true;
-    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]})
+    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]} )
   } else {
     let scram = getTranslation(data.message);
-    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]})
+    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]} )
     data.cancel = true;
   }
 }
@@ -99,9 +99,6 @@ export const parseMoji: ParseMojiFunction = function (
     }
   }
   console.log("Debug: (translation::parseMoji) - Emoji parsed: " + newMsg);
-  if (mojex.test(newMsg)) {
-    return parseMoji(newMsg);
-  }
   return newMsg;
 };
 

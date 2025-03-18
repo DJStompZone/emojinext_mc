@@ -82,9 +82,6 @@ export const parseMoji = function (msg) {
         }
     }
     console.log("Debug: (translation::parseMoji) - Emoji parsed: " + newMsg);
-    if (mojex.test(newMsg)) {
-        return parseMoji(newMsg);
-    }
     return newMsg;
 };
 export const getSticker = function (stkrString) {
