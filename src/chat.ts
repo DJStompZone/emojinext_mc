@@ -14,10 +14,10 @@ export interface ChatData {
 }
 
 export function onChat(data: ChatData): void {
-  if (!data.message && !data.message.includes("!run")) {
+  if (!data.message) {
     return;
   }
-  if (data.message.startsWith("!run") || data.message.startsWith("!run")) {
+  if (data.message.startsWith("!run") || data.message.startsWith("~run")) {
     onRun(data);
     return;
   }

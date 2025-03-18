@@ -58,15 +58,16 @@ export function handleTranslation(data) {
         console.log("Debug: (translation::handleTranslation) - Emoji parsed: " + mojed);
         let scram = getTranslation(mojed);
         data.cancel = true;
-        world.sendMessage(scram);
+        world.sendMessage({ "rawtext": [{ "text": `<${data.sender.name}> ${scram}` }] });
     }
     else {
         let scram = getTranslation(data.message);
-        data.message = scram;
+        world.sendMessage({ "rawtext": [{ "text": `<${data.sender.name}> ${scram}` }] });
+        data.cancel = true;
     }
 }
 export const parseMoji = function (msg) {
-    var _a, _b, _c, _d;
+    var _a, _b;
     let newMsg = msg;
     console.log("Debug: (translation::parseMoji) - Parsing emoji: " + msg);
     const matches = (_a = msg.match(mojex)) !== null && _a !== void 0 ? _a : [];
@@ -74,18 +75,21 @@ export const parseMoji = function (msg) {
         console.error("Debug: (translation::parseMoji) - No emoji found in message");
         return;
     }
-    for (const i of Array((_b = matches === null || matches === void 0 ? void 0 : matches.length) !== null && _b !== void 0 ? _b : 0).keys()) {
-        let matched = newmoji[(_d = (_c = matches[i]) === null || _c === void 0 ? void 0 : _c.replace(/:/g, "")) === null || _d === void 0 ? void 0 : _d.toLowerCase()];
+    for (const match of matches) {
+        let matched = newmoji[(_b = match.replace(/:/g, "")) === null || _b === void 0 ? void 0 : _b.toLowerCase()];
         if (!!matched) {
-            newMsg = msg.replace(matches[i], String.fromCharCode(matched));
+            newMsg = newMsg.replace(match, String.fromCharCode(matched));
         }
     }
-    console.log("Debug: (translation::parseMoji) - Emoji parsed: " + msg);
+    console.log("Debug: (translation::parseMoji) - Emoji parsed: " + newMsg);
+    if (mojex.test(newMsg)) {
+        return parseMoji(newMsg);
+    }
     return newMsg;
 };
 export const getSticker = function (stkrString) {
     if (stickers.hasOwnProperty(stkrString)) {
-        return `\n\n\n\n\n\n${String.fromCharCode(stickers[stkrString])}\n\n\n\n\n\n`;
+        return `\n\n\n\n\n${String.fromCharCode(stickers[stkrString])}\n\n\n\n\n`;
     }
     else {
         console.error(`Sticker ${stkrString} not found`);

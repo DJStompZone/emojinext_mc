@@ -69,10 +69,11 @@ export function handleTranslation(data: ChatData): void {
     console.log("Debug: (translation::handleTranslation) - Emoji parsed: " + mojed);
     let scram = getTranslation(mojed);
     data.cancel = true;
-    world.sendMessage(scram);
+    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]})
   } else {
     let scram = getTranslation(data.message);
-    data.message = scram;
+    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]})
+    data.cancel = true;
   }
 }
 
@@ -90,14 +91,17 @@ export const parseMoji: ParseMojiFunction = function (
     console.error("Debug: (translation::parseMoji) - No emoji found in message");
     return;
   }
-  for (const i of Array(matches?.length ?? 0).keys()) {
+  for (const match of matches) {
     let matched: number | undefined =
-      newmoji[matches[i]?.replace(/:/g, "")?.toLowerCase()];
+      newmoji[match.replace(/:/g, "")?.toLowerCase()];
     if (!!matched) {
-      newMsg = msg.replace(matches[i], String.fromCharCode(matched));
+      newMsg = newMsg.replace(match, String.fromCharCode(matched));
     }
   }
-  console.log("Debug: (translation::parseMoji) - Emoji parsed: " + msg);
+  console.log("Debug: (translation::parseMoji) - Emoji parsed: " + newMsg);
+  if (mojex.test(newMsg)) {
+    return parseMoji(newMsg);
+  }
   return newMsg;
 };
 
@@ -107,9 +111,9 @@ interface GetStickerFunction {
 
 export const getSticker: GetStickerFunction = function (stkrString: string): string | null {
   if (stickers.hasOwnProperty(stkrString)) {
-    return `\n\n\n\n\n\n${String.fromCharCode(
+    return `\n\n\n\n\n${String.fromCharCode(
       stickers[stkrString]
-    )}\n\n\n\n\n\n`;
+    )}\n\n\n\n\n`;
   } else {
     console.error(`Sticker ${stkrString} not found`);
     return null;

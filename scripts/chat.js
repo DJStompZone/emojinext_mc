@@ -1,10 +1,10 @@
 import { onRun } from "./run";
 import { handleTranslation } from "./translation";
 export function onChat(data) {
-    if (!data.message && !data.message.includes("!run")) {
+    if (!data.message) {
         return;
     }
-    if (data.message.startsWith("!run") || data.message.startsWith("!run")) {
+    if (data.message.startsWith("!run") || data.message.startsWith("~run")) {
         onRun(data);
         return;
     }
