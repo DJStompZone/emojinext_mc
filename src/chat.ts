@@ -1,15 +1,10 @@
-import { Dimension } from "@minecraft/server";
+import { Player } from "@minecraft/server";
 import { onRun } from "./run";
 import { handleTranslation } from "./translation";
 
 export interface ChatData {
   message: string;
-  sender: {
-    name: string;
-    dimension: Dimension;
-    sendMessage: (msg: string) => void;
-    playSound: (sound: string) => void;
-  };
+  sender: Player;
   cancel: boolean;
 }
 

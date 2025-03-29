@@ -2,22 +2,55 @@ import { world } from "@minecraft/server";
 import { ChatData } from "./chat";
 import { newmoji } from "./newmoji";
 import { stickers } from "./stickers";
+import { NetherConverter } from "./netherConverter";
 
 const mojex = /:[a-z0-9_]+?:/gi;
 
-interface TranslationFunction {
-  (msg: string): string;
+export interface TranslationFunction {
+  (msg: string, data: ChatData): string;
 }
-export const getTranslation: TranslationFunction = function (
-  msg: string
-): string {
-  if (
-    msg.slice(1, 12).includes("fromnether") ||
-    msg.slice(1, 12).includes("tonether") ||
-    msg.slice(1, 4).includes("fm")
-  ) {
-    return msg;
+
+export function handleNetherConversion(command: string, args: string[], data: ChatData): string {
+    let x: number, z: number;
+    
+    if (args.length === 1) {
+      // No coordinates provided, use current position
+      const pos = data.sender.getHeadLocation();
+      x = Math.floor(pos.x);
+      z = Math.floor(pos.z);
+    } else if (args.length === 3) {
+      // Coordinates provided (command + x + z)
+      x = parseFloat(args[1]);
+      z = parseFloat(args[2]);
+      
+      if (isNaN(x) || isNaN(z)) {
+        return "§cInvalid coordinates provided";
+      }
+    } else {
+      return "§cUsage: .[tonether|fromnether] [x <y?> z]";
+    }
+    
+    NetherConverter.convert(data.sender, command, x, z);
+    data.cancel = true;
+    return "";
   }
+
+export const getTranslation: TranslationFunction = function (
+  msg: string,
+  data: ChatData
+): string {
+  if (msg.startsWith(".") || msg.startsWith("!") || msg.startsWith("~")) {
+    const args = msg.split(" ");
+    const command = args[0].toLowerCase();
+    
+    // Handle nether conversion commands
+    if (NetherConverter.isNetherCommand(command)) {
+      data.cancel = true;
+      return handleNetherConversion(command, args, data);
+    }
+  }
+
+  // Handle regular message translation
   let chrs: string[] = Array.from(msg);
   let skipflag: number = 0;
   let newMsg: string[] = [];
@@ -67,12 +100,16 @@ export function handleTranslation(data: ChatData): void {
     console.log("Debug: (translation::handleTranslation) - Parsing emoji");
     let mojed = parseMoji(data.message);
     console.log("Debug: (translation::handleTranslation) - Emoji parsed: " + mojed);
-    let scram = getTranslation(mojed);
+    let scram = getTranslation(mojed, data);
     data.cancel = true;
-    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]} )
+    if (scram !== "") {
+      world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]} )
+    }
   } else {
-    let scram = getTranslation(data.message);
-    world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]} )
+    let scram = getTranslation(data.message, data);
+    if (scram !== "") { 
+      world.sendMessage({"rawtext": [{"text": `<${data.sender.name}> ${scram}`}]} )
+    }
     data.cancel = true;
   }
 }
