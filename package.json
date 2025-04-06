@@ -16,7 +16,7 @@
   "description": "Modernized reimplementation of Custom StompZone Emojis for Minecraft",
   "dependencies": {
     "@minecraft/creator-tools": "^0.8.0",
-    "@minecraft/server": "^1.7.0",
+    "@minecraft/server": "github:DJStompZone/at_minecraft_server",
     "@minecraft/vanilla-data": "^1.21.62",
     "typescript": "^5.8.2"
   },

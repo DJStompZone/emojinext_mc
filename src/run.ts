@@ -4,7 +4,7 @@ import { CSZEError } from "./CSZEError";
 
 let dimension = null;
 
-class Commands {
+export class Commands {
   static run(
     cmd: string,
     dimension: Dimension = world.getDimension("overworld")
@@ -14,11 +14,9 @@ class Commands {
 }
 
 export const run = Commands.run;
-interface RunCommandFunction {
-  (cmd: string): void;
-}
 
-export const runC: RunCommandFunction = function (cmd: string): void {
+export const runC = function (cmd: string): void {
+  const dimension = world.getDimension("overworld");
   dimension.runCommandAsync(cmd);
 };
 

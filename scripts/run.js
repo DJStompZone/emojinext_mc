@@ -1,13 +1,14 @@
 import { world } from "@minecraft/server";
 import { CSZEError } from "./CSZEError";
 let dimension = null;
-class Commands {
+export class Commands {
     static run(cmd, dimension = world.getDimension("overworld")) {
         return dimension.runCommandAsync(cmd);
     }
 }
 export const run = Commands.run;
 export const runC = function (cmd) {
+    const dimension = world.getDimension("overworld");
     dimension.runCommandAsync(cmd);
 };
 function onCommandSuccess(data) {
