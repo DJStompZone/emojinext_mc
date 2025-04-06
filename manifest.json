@@ -2,12 +2,12 @@
 	"format_version": 2,
 	"header": {
 		"name": "StompZone Emojis-Next",
-		"description": "[v§51.1.8§r] by §4§lDJ Stomp§r <discord.stomp.zone>",
+		"description": "[v§51.1.9§r] by §4§lDJ Stomp§r <discord.stomp.zone>",
 		"uuid": "aaa417f9-c7f8-4b4c-9673-1a19a50c289b",
 		"version": [
 			1,
 			1,
-			8
+			9
 		],
 		"min_engine_version": [
 			1,
@@ -23,7 +23,7 @@
 			"version": [
 				1,
 				1,
-				8
+				9
 			],
 			"entry": "scripts/main.js"
 		}
