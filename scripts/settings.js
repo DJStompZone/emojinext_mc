@@ -10,13 +10,13 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
                 ? "gamerule keepinventory false"
                 : null;
         if (command) {
-            run(command)
-                .then(() => {
+            try {
+                const _commandResult = run(command);
                 console.log(`Successfully set keepInventory to ${firstWord.toLowerCase()}.`);
-            })
-                .catch((error) => {
+            }
+            catch (error) {
                 console.error(`Failed to set keepInventory: ${error}`);
-            });
+            }
         }
         else {
             console.error(`Invalid command: '${firstWord}'. Use 'on' or 'off' as the first word.`);

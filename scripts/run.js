@@ -3,13 +3,13 @@ import { CSZEError } from "./CSZEError";
 let dimension = null;
 export class Commands {
     static run(cmd, dimension = world.getDimension("overworld")) {
-        return dimension.runCommandAsync(cmd);
+        return dimension.runCommand(cmd);
     }
 }
 export const run = Commands.run;
 export const runC = function (cmd) {
     const dimension = world.getDimension("overworld");
-    dimension.runCommandAsync(cmd);
+    return dimension.runCommand(cmd);
 };
 function onCommandSuccess(data) {
     try {
@@ -58,7 +58,7 @@ export function onRun(data) {
             try {
                 let dimension = world.getDimension("overworld");
                 const runC = function (cmd) {
-                    dimension.runCommandAsync(cmd);
+                    dimension.runCommand(cmd);
                 };
                 var message = data.message;
                 let cmd = message.split("!run ")[1];

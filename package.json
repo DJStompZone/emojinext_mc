@@ -1,6 +1,6 @@
 {
   "name": "emojinext_mc",
-  "version": "1.1.9",
+  "version": "1.2.2",
   "main": "build.js",
   "scripts": {
     "build": "tsc",
@@ -16,7 +16,7 @@
   "description": "Modernized reimplementation of Custom StompZone Emojis for Minecraft",
   "dependencies": {
     "@minecraft/creator-tools": "^0.8.0",
-    "@minecraft/server": "github:DJStompZone/at_minecraft_server",
+    "@minecraft/server": "^2.3.0-beta.1.21.110-preview.24",
     "@minecraft/vanilla-data": "^1.21.62",
     "typescript": "^5.8.2"
   },

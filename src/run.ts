@@ -1,23 +1,23 @@
-import { Dimension, world } from "@minecraft/server";
+import { CommandResult, Dimension, world } from "@minecraft/server";
 import { ChatData } from "./chat";
 import { CSZEError } from "./CSZEError";
 
 let dimension = null;
 
 export class Commands {
-  static run(
+  public static run(
     cmd: string,
     dimension: Dimension = world.getDimension("overworld")
-  ): Promise<any> {
-    return dimension.runCommandAsync(cmd);
+  ): CommandResult {
+    return dimension.runCommand(cmd);
   }
 }
 
 export const run = Commands.run;
 
-export const runC = function (cmd: string): void {
+export const runC = function (cmd: string): CommandResult {
   const dimension = world.getDimension("overworld");
-  dimension.runCommandAsync(cmd);
+  return dimension.runCommand(cmd);
 };
 
 function onCommandSuccess(data: ChatData): void {
@@ -72,7 +72,7 @@ export function onRun(data: ChatData): void {
       try {
         let dimension = world.getDimension("overworld");
         const runC = function (cmd: string): void {
-          dimension.runCommandAsync(cmd);
+          dimension.runCommand(cmd);
         };
         var message = data.message;
         let cmd = message.split("!run ")[1];

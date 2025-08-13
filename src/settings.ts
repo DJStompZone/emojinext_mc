@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { CommandResult, system } from "@minecraft/server";
 import { run } from "./run";
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
@@ -15,15 +15,12 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
         : null;
 
     if (command) {
-      run(command)
-        .then(() => {
-          console.log(
-            `Successfully set keepInventory to ${firstWord.toLowerCase()}.`
-          );
-        })
-        .catch((error) => {
-          console.error(`Failed to set keepInventory: ${error}`);
-        });
+      try {
+        const _commandResult: CommandResult = run(command);
+        console.log(`Successfully set keepInventory to ${firstWord.toLowerCase()}.`);
+      } catch (error) {
+        console.error(`Failed to set keepInventory: ${error}`);
+      }
     } else {
       console.error(
         `Invalid command: '${firstWord}'. Use 'on' or 'off' as the first word.`

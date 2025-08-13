@@ -2,12 +2,12 @@
 	"format_version": 2,
 	"header": {
 		"name": "StompZone Emojis-Next",
-		"description": "[v§51.1.9§r] by §4§lDJ Stomp§r <discord.stomp.zone>",
+		"description": "[v§51.2.2§r] by §4§lDJ Stomp§r <discord.stomp.zone>",
 		"uuid": "aaa417f9-c7f8-4b4c-9673-1a19a50c289b",
 		"version": [
 			1,
-			1,
-			9
+			2,
+			2
 		],
 		"min_engine_version": [
 			1,
@@ -22,8 +22,8 @@
 			"uuid": "c7081882-5ccb-4dbf-9029-7edaf6ed3a00",
 			"version": [
 				1,
-				1,
-				9
+				2,
+				2
 			],
 			"entry": "scripts/main.js"
 		}
@@ -31,7 +31,7 @@
 	"dependencies": [
 		{
 			"module_name": "@minecraft/server",
-			"version": "2.0.0-alpha"
+			"version": "2.2.0-beta"
 		},
 		{
 			"version": [
